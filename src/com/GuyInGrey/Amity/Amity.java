@@ -5,6 +5,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,6 +15,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import github.scarsz.discordsrv.util.DiscordUtil;
@@ -22,12 +24,16 @@ public class Amity extends JavaPlugin implements Listener
 {
 	public static Amity instance;
 	Location lobby;
+	Location lobby1;
+	Location lobby2;
 	static String ChannelID = "743970937052987492";
 	
 	@Override
 	public void onEnable()
 	{
 		lobby = new Location(Bukkit.getWorlds().get(0), 0.5, 80, 0.5, 180, 0);
+		lobby1 = new Location(Bukkit.getWorlds().get(0), 13, 97, -13);
+		lobby2 = new Location(Bukkit.getWorlds().get(0), -13, 70, 13);
 		instance = this;
 		
 		getServer().getPluginManager().registerEvents(new ChairSit(), this);
@@ -42,12 +48,30 @@ public class Amity extends JavaPlugin implements Listener
 		    @Override
 		    public void run() {
 		    	Tag.instance.Tick();
+		    	Tick();
 		    }
 		}.runTaskTimer(this, 0L, 1L);
 	}
 	 
 	@Override
 	public void onDisable() { }
+	
+	public void Tick()
+	{
+		for (Player p : Bukkit.getOnlinePlayers())
+		{
+			if (!InLobby(p)) { return; }
+			
+			// No effects in lobby
+			for (PotionEffect pe : p.getActivePotionEffects())
+			{ p.removePotionEffect(pe.getType()); }
+		}
+	}
+	
+	public boolean InLobby(Entity e)
+	{
+		return Helper.PlayerInArea(e, lobby1, lobby2);
+	}
 	
 	public void TeleportPlayer(Player p, Location newLoc)
 	{

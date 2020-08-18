@@ -49,7 +49,7 @@ public class Tag implements Listener
 	boolean itWaiting = false;
 	boolean gameJustStarted = false;
 	String tagPrefix = "[" + ChatColor.AQUA + "TAG" + ChatColor.WHITE + "] " + ChatColor.GOLD;
-
+	
 	Location gameBox1;
 	Location gameBox2;
 	Location lobby1;
@@ -76,8 +76,7 @@ public class Tag implements Listener
 	}
 	
 	public void Tick()
-	{ 
-		// Check bounding boxes
+	{
 		for (Player p : Bukkit.getOnlinePlayers())
 		{
 			// This process only applies to people in the tag zones.
@@ -122,7 +121,7 @@ public class Tag implements Listener
 			if (p.getVehicle() != null) { p.getWorld().spawnParticle(Particle.NOTE, p.getLocation(), 1); }
 			
 			// Blindness option
-			if (Helper.GetLever(lever_blindness) && Helper.PlayerInArea(p, gameBox1, gameBox2))
+			if (Helper.GetLever(lever_blindness))
 			{ p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 1000000, 1, false, false, false)); }
 			else { p.removePotionEffect(PotionEffectType.BLINDNESS); }
 			
