@@ -2,7 +2,6 @@ name: Amity
 main: com.GuyInGrey.Amity.Amity
 version: 1.0
 api-version: 1.13
-commands:
 depend: [NoteBlockAPI, DiscordSRV]
 commands:
    lobby:
