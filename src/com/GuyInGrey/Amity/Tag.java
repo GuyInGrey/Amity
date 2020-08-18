@@ -467,7 +467,7 @@ public class Tag implements Listener
 			"If you're it, use your snowball to tag others.",
 			" - Arrow Of Flight -",
 			"Everyone can use their bow to fly away.",
-			"Arrows have a 15 second cooldown.",
+			"Arrows have a 10 second cooldown.",
 			" - Blindness - ",
 			"With blindess, you can still see the glows of other players.",
 			"It will stop you from sprinting.",
