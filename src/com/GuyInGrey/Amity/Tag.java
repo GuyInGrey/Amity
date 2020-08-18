@@ -27,6 +27,7 @@ import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
@@ -529,5 +530,18 @@ public class Tag implements Listener
 	{
 		if (p.equals(null)) { return false; }
 		return Helper.PlayerInArea(p, gameBox1, gameBox2) || Helper.PlayerInArea(p, lobby1, lobby2);
+	}
+	
+	public void playerLeave(PlayerQuitEvent e)
+	{
+		if (IsInGame(e.getPlayer()))
+		{
+			Players.remove(e.getPlayer().getUniqueId());
+			Amity.Broadcast(ChatColor.AQUA + e.getPlayer().getDisplayName() + ChatColor.GOLD + " has left the current Tag game.");
+			if (It == e.getPlayer().getUniqueId())
+			{
+				Elimination(e.getPlayer(), Bukkit.getPlayer((UUID)Players.keySet().toArray()[0]));
+			}
+		}
 	}
 }
