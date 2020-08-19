@@ -80,19 +80,11 @@ public class Tag implements Listener
 	{
 		for (Player p : Bukkit.getOnlinePlayers())
 		{
-			// This process only applies to people in the tag zones.
-			if (!InGameArea(p)) { return; }
 			UUID id = p.getUniqueId();
 			
 			// Manage teams.
 			Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 			Team itTeam = scoreboard.getTeam("It");
-			if (itTeam.equals(null))
-			{
-				itTeam = scoreboard.registerNewTeam("It");
-				itTeam.setColor(ChatColor.RED);
-				itTeam.setOption(Option.COLLISION_RULE, OptionStatus.NEVER);
-			}
 			Team everyoneTeam = scoreboard.getTeam("Everyone");
 			if (It == p.getPlayer().getUniqueId() && GameRunning)
 			{
@@ -110,6 +102,9 @@ public class Tag implements Listener
 			if ((IsInGame(p) && !Helper.PlayerInArea(p, gameBox1, gameBox2) && !(p.getUniqueId().equals(It) && itWaiting)) ||
 					(p.getGameMode() == GameMode.SPECTATOR && !Helper.PlayerInArea(p, gameBox1, gameBox2)))
 			{ Amity.instance.TeleportPlayer(p, tagStart); }
+
+			// This process only applies to people in the tag zones.
+			if (!InGameArea(p)) { return; }
 			
 			// Players not in game shouldn't be in the game area.
 			if (!IsInGame(p) && GameRunning && Helper.PlayerInArea(p, gameBox1, gameBox2) && p.getGameMode() != GameMode.SPECTATOR)
@@ -238,6 +233,8 @@ public class Tag implements Listener
 							Amity.Broadcast(tagPrefix + hitPlayer.getDisplayName() + " is it!");
 							
 							Players.get(It).TicksUntilSnowball = 5 * 20;
+							Players.get(itPlayer.getUniqueId()).TicksUntilArrow = 5;
+							Players.get(itPlayer.getUniqueId()).TicksItLeft = Players.size() * 20 * 60;
 							Players.get(It).Lives -= 1;
 
 							hitPlayer.getInventory().setItem(8, Totem(Players.get(It).Lives));
@@ -532,6 +529,7 @@ public class Tag implements Listener
 		return Helper.PlayerInArea(p, gameBox1, gameBox2) || Helper.PlayerInArea(p, lobby1, lobby2);
 	}
 	
+	@EventHandler
 	public void playerLeave(PlayerQuitEvent e)
 	{
 		if (IsInGame(e.getPlayer()))

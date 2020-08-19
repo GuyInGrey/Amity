@@ -44,11 +44,13 @@ public class Amity extends JavaPlugin implements Listener
 		getServer().getPluginManager().registerEvents(this, this);
 		
 		this.getCommand("lobby").setExecutor(new CmdLobby());
+		this.getCommand("maze").setExecutor(new MazeCommand());
 		
 		new BukkitRunnable () {
 		    @Override
 		    public void run() {
 		    	Tag.instance.Tick();
+		    	MazeCommand.instance.Tick();
 		    	Tick();
 		    }
 		}.runTaskTimer(this, 0L, 1L);

@@ -4,6 +4,9 @@ version: 1.0
 api-version: 1.13
 depend: [NoteBlockAPI, DiscordSRV]
 commands:
-   lobby:
-      description: Teleports you to the lobby.
-      usage: /lobby
+  lobby:
+    description: Teleports you to the lobby.
+    usage: /lobby
+  maze:
+    description: Makes a maze.
+    usage: /maze
