@@ -29,7 +29,6 @@ public class MazeGenerator
 				for (int y = -1; y <= 1; y++)
 				{
 					if (x != 0 && y != 0) { continue; }
-					if (x == 0 && y == 0) { continue; }
 					Point2D test = new Point2D(last.X + x, last.Y + y);
 					if (test.X >= 0 && test.X < width && test.Y >= 0 && test.Y < height
 							&& !visited[test.X][test.Y])
