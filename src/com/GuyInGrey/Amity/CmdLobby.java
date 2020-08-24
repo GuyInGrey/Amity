@@ -11,32 +11,34 @@ import net.md_5.bungee.api.ChatColor;
 public class CmdLobby implements CommandExecutor
 {
 
-	@Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
-	{
-		if (sender instanceof Player)
-		{
-			Player p = (Player)sender;
-			
-			boolean canTeleport = true;
-			
-			if (Tag.instance.IsInGame(p)) { canTeleport = false; }
-			
-			if (canTeleport)
-			{
-				if (p.getGameMode() == GameMode.SPECTATOR)
-				{
-					p.setGameMode(GameMode.ADVENTURE);
-				}
-				Amity.instance.TeleportPlayer(p, Amity.instance.lobby);
-			}
-			else
-			{
-				sender.sendMessage(ChatColor.RED + "You cannot teleport at this time.");
-			}
-			return true;
-		}
-		sender.sendMessage("This command cannot be used in the console.");
-		return false;
-	}
+  @Override
+  public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
+  {
+    if (sender instanceof Player)
+    {
+      Player p = (Player) sender;
+
+      boolean canTeleport = true;
+
+      if (Tag.instance.IsInGame(p))
+      {
+        canTeleport = false;
+      }
+
+      if (canTeleport)
+      {
+        if (p.getGameMode() == GameMode.SPECTATOR)
+        {
+          p.setGameMode(GameMode.ADVENTURE);
+        }
+        Amity.instance.TeleportPlayer(p, Amity.instance.lobby);
+      } else
+      {
+        sender.sendMessage(ChatColor.RED + "You cannot teleport at this time.");
+      }
+      return true;
+    }
+    sender.sendMessage("This command cannot be used in the console.");
+    return false;
+  }
 }

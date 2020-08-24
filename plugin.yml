@@ -10,3 +10,12 @@ commands:
   maze:
     description: Makes a maze.
     usage: /maze
+  cellborder:
+    description: Shows cell borders.
+    usage: /cellborder
+  pack:
+    description: Gives you the resource pack.
+    usage: /pack
+  dungeon:
+    description: Dungeon
+    usage: /dungeon
